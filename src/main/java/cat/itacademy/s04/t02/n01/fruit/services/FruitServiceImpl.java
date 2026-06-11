@@ -1,5 +1,6 @@
 package cat.itacademy.s04.t02.n01.fruit.services;
 
+import cat.itacademy.s04.t02.n01.fruit.exceptions.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruit.models.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.models.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.repositories.FruitRepository;
@@ -48,18 +49,35 @@ public class FruitServiceImpl implements FruitService {
     }
 
 
-@Override
-public FruitResponseDTO getFruitById(Long id) {
-    return null;
-}
+    @Override
+    public FruitResponseDTO getFruitById(Long id) {
+        Fruit fruit = fruitRepository.findById(id)
+                .orElseThrow(() -> new FruitNotFoundException());
+        return new FruitResponseDTO(
+                fruit.getId(),
+                fruit.getName(),
+                fruit.getWeightInKilos()
+        );
+    }
 
-@Override
-public FruitResponseDTO updateFruit(Long id, FruitRequestDTO requestDTO) {
-    return null;
-}
+    @Override
+    public FruitResponseDTO updateFruit(Long id, FruitRequestDTO requestDTO) {
+        Fruit fruit = fruitRepository.findById(id)
+                .orElseThrow(() -> new FruitNotFoundException());
+        fruit.setName(requestDTO.getName());
+        fruit.setWeightInKilos(requestDTO.getWeightInKilos());
 
-@Override
-public void deleteFruit(Long id) {
+        Fruit savedFruit = fruitRepository.save(fruit);
+        FruitResponseDTO fruitResponse = new FruitResponseDTO(
+                savedFruit.getId(),
+                savedFruit.getName(),
+                savedFruit.getWeightInKilos()
+        );
+          return fruitResponse;
+    }
 
-}
+    @Override
+    public void deleteFruit(Long id) {
+
+    }
 }
