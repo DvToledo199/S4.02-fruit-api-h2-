@@ -73,11 +73,13 @@ public class FruitServiceImpl implements FruitService {
                 savedFruit.getName(),
                 savedFruit.getWeightInKilos()
         );
-          return fruitResponse;
+        return fruitResponse;
     }
 
     @Override
     public void deleteFruit(Long id) {
-
+        Fruit fruit = fruitRepository.findById(id)
+                .orElseThrow(() -> new FruitNotFoundException());
+        fruitRepository.delete(fruit);
     }
 }
