@@ -2,6 +2,7 @@ package cat.itacademy.s04.t02.n01.fruit.controllers;
 
 import cat.itacademy.s04.t02.n01.fruit.models.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import cat.itacademy.s04.t02.n01.fruit.models.dto.FruitResponseDTO;
@@ -17,7 +18,7 @@ public class FruitController {
 
     @PostMapping
     public FruitResponseDTO createFruit(
-            @RequestBody FruitRequestDTO requestDTO) {
+            @Valid @RequestBody FruitRequestDTO requestDTO) {
         return fruitService.createFruit(requestDTO);
     }
 
@@ -32,7 +33,7 @@ public class FruitController {
     }
 
     @PutMapping("/{id}")
-    public FruitResponseDTO updateFruit(@PathVariable Long id, @RequestBody FruitRequestDTO requestDTO) {
+    public FruitResponseDTO updateFruit(@PathVariable Long id, @Valid @RequestBody FruitRequestDTO requestDTO) {
         return fruitService.updateFruit(id, requestDTO);
     }
 
