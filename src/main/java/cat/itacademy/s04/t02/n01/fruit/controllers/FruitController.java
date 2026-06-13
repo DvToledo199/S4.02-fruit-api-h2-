@@ -4,6 +4,7 @@ import cat.itacademy.s04.t02.n01.fruit.models.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import cat.itacademy.s04.t02.n01.fruit.models.dto.FruitResponseDTO;
 
@@ -16,6 +17,7 @@ public class FruitController {
 
     private final FruitService fruitService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public FruitResponseDTO createFruit(
             @Valid @RequestBody FruitRequestDTO requestDTO) {
@@ -37,6 +39,7 @@ public class FruitController {
         return fruitService.updateFruit(id, requestDTO);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteFruit(@PathVariable Long id) {
         fruitService.deleteFruit(id);
